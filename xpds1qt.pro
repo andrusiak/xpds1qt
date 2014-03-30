@@ -1,11 +1,4 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2013-11-21T22:06:28
-#
-#-------------------------------------------------
-
 QT       += core gui
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = xpds1qt
@@ -21,14 +14,15 @@ SOURCES  += mainwindow.cpp \
         padjus.c \
         mcc.c \
         initwin.c \
-        fft.c
+        fft.c \
+    workthread.cpp
 
 HEADERS  += mainwindow.h \
          qcustomplot.h \
-         pds1.h
+         pds1.h \
+    workthread.h \
+    pds.h
 
 FORMS    += mainwindow.ui
-
-#XGPATH = /usr/local/lib/xgrafix
 
 CONFIG += console

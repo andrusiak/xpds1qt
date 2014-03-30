@@ -13,7 +13,7 @@ int pds_main(int argc, char *argv[])
   /*********************************************************/
   /* Read input file, and initialize params and vars. This */
   /* function calls SPECIES and LOAD or Restore            */
-  start(argc, argv);
+  start_(argc, argv);
   
  // InitWindows(argc, argv);
 
@@ -28,8 +28,8 @@ int pds_main(int argc, char *argv[])
 
     history();
 
-    printf("#%d\%f\n",step,t);
-    if(step==100){ return;
+    printf("#%d\t%f\t%d\n",step,t, hist_hi);
+    if(step==10000){ return;
     } else step++;
 //    XGUpdate();
   }
@@ -38,7 +38,7 @@ int pds_main(int argc, char *argv[])
 
 /**************************************************************/
 
-start(iargc, pargv)
+start_(iargc, pargv)
 int iargc;
 char *pargv[];
 {

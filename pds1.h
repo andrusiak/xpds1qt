@@ -77,10 +77,11 @@ GLOBAL float **r, **vr, **vth, **vph, **srho, *rho, *e, *phi, *r_array,
              **e_array, **th_array, *Power_hist;
 
 GLOBAL void  circuit1(), circuit2(), circuit3(), circuit4(), (*circuitptr)();
-GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();   
-GLOBAL int pds_main(int, char **);
-#undef GLOBAL
+GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
 
-//#if defined(GLOBALORIGIN)
-//extern "C" pds_main(int, char **);
-//#endif
+GLOBAL int pds_main(int, char **);
+
+GLOBAL int start_(int, char **);
+GLOBAL void history(), move(), adjust(), mcc();
+
+#undef GLOBAL
