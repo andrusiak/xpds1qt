@@ -26,6 +26,9 @@ public:
 
     WorkThread * mThread;
 
+    void setupPotentialChart(QCustomPlot *customPlot);
+    void setupConcentrationChart(QCustomPlot *customPlot);
+
     void setupData(QCustomPlot *customPlot);
 
     void setupStyledDemo(QCustomPlot *customPlot);
