@@ -1,0 +1,56 @@
+Q MACHINE(IN MKS UNITS)
+
+-nsp---nc---nc2p---dt[s]------r0[m]----r1[m]-----epsilonr--
+  2   100   2e6  2.4414e-10   0.01     0.03        1.0
+
+-rhoback[C/m^3]-backj[Amp/m^2]--dde---extR[Ohm]--extL[H]---extC[F]--q0[C]-
+     0.0           0.0          0.0     1e10        0.0      0.0     0.0 
+
+-dcramped--source--dc[V|Amp]--ramp[(V|Amp)/s]---ac[V|Amp]---f0[Hz]--theta0[D]-
+   0         v        0.0          0.0            0.0        1e7       0.0      
+
+---secondary----e_collisional---i_collisional----reflux---nfft--
+      0             0		      0        	  0	  512
+
+---seec(electrons)---seec(ions)---ion species---Gpressure[Torr]---GTemp[eV]---
+         0.0            0.2	      2	            3e-2            .05 	
+	
+ELECTRON-NEUTRAL COLLISIONAL PARAMETERS-----
+
+--selsmax[m^2]---elsengy0[eV]---elsengy1[eV]---elsengy2[eV]-
+ 	 1.0e-19         0.0             0.0           10.0     	
+
+--sextmax[m^2]---extengy0[eV]---extengy1[eV]---extengy2[eV]---
+	 1.0e-20        12.0     	  50.0    	  100.0    
+
+--sionmax[m^2]---ionengy0[eV]---ionengy1[eV]---ionengy2[eV]---
+     1.0e-20		 13.6	       60.0	       110.0
+
+ION-NEUTRAL COLLISIONAL PARAMETERS-----
+
+---achrgx[m^2]--bchrgx[m^2/V^1/2]-------ascat[m^2]--bscat[m^2/V^1/2]---
+     3.0e-19	     0.0	          2.0e-19        0.0         
+
+
+SPECIES 1
+
+----q[C]-------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]--
+ -1.602e-19   9.11e-31   0.0             2.0             0.0       
+
+--v0L[m/s]--v0R[m/s]--vtL[m/s]--vtR[m/s]--vcL[m/s]--vcR[m/s]--vtperp[m/s]---
+    0.0       0.        0.0       2e5        0.        0.   	 0.0
+
+---nbin----Emin[eV]----Emax[eV]---max_np---
+     50       0         100       50000
+
+
+SPECIES 2
+
+----q[C] ------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]--
+  1.602e-19   36.44e-30    0.0           0.316             0.0      
+
+--v0L[m/s]--v0R[m/s]--vtL[m/s]--vtR[m/s]--vcL[m/s]--vcR[m/s]--vtperp[m/s]---
+    0.        0.       0.0      31622.777    0.        0.        0.0
+
+---nbin----Emin[eV]----Emax[eV]---max_np---
+    50       0           100      50000
