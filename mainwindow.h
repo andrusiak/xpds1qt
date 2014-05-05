@@ -28,17 +28,22 @@ public:
 
     void setupPotentialChart(QCustomPlot *customPlot);
     void setupConcentrationChart(QCustomPlot *customPlot);
+    void setupNumberParticleChart(QCustomPlot *customPlot);
+
+    void setupRealtimeDataDemo(QCustomPlot *customPlot);
 
     void setupData(QCustomPlot *customPlot);
-
     void setupStyledDemo(QCustomPlot *customPlot);
 
 private slots:
     void on_startButton_clicked();
     void onDataChanged();
+    void realtimeDataSlot();
 
 private:
     Ui::MainWindow *ui;
+    QTimer dataTimer;
+    QString demoName;
 
 };
 

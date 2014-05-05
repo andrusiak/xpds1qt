@@ -16,18 +16,27 @@ void WorkThread::run()
    // InitWindows(argc, argv);
 
     history();
+    fields();
+
     int step=0;
+    float *pot = phi;
     while(True)
     {
       t += dt;
+
       move();
       adjust();
       mcc();
-
+      fields();
       history();
 
-//      printf("#%d\t%f\t%d\n",step,t, hist_hi);
-      if((step+1)%10000==0){
+      pot = phi;
+ //      pot = phi[nc/2];
+
+//       printf("%f\t", phi[nc/2]);
+
+//    printf("#%d\t%f\t%d\n",step,t, hist_hi);
+      if((step+1)%100000==0){
           emit DataChanged();
           this->terminate();
       } else step++;

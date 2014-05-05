@@ -82,6 +82,6 @@ GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
 GLOBAL int pds_main(int, char **);
 
 GLOBAL int start_(int, char **);
-GLOBAL void history(), move(), adjust(), mcc();
+GLOBAL void history(), move(), adjust(), mcc(), fields();
 
 #undef GLOBAL

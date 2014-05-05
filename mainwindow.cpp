@@ -13,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(mThread, SIGNAL(DataChanged()), this, SLOT(onDataChanged()));
 
-   // setupStyledDemo(ui->chart);
+    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
+    dataTimer.start(50); // Interval 0 means to refresh as fast as possible
 }
 
 MainWindow::~MainWindow()
@@ -33,12 +35,16 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::onDataChanged()
 {
-    setupData(ui->chart);
+//    setupData(ui->chart);
 
     setupPotentialChart(ui->chart_2);
-//    setupConcentrationChart(ui->chart_2);
+    setupConcentrationChart(ui->chart);
+//    setupNumberParticleChart(ui->chart_2);
 
     ui->progressBar->setVisible(false);
+
+    printf("%f\t%f\n", np[0], np[1]);
+
 
 }
 
@@ -47,7 +53,8 @@ void MainWindow::setupPotentialChart(QCustomPlot *customPlot){
 
     // prepare data:
 
-    QVector<double> r(ng), potential(ng);
+    QVector<double> r(nc), potential(nc);
+
 
     for (int i=0; i<r.size(); ++i)
     {
@@ -140,6 +147,107 @@ void MainWindow::setupConcentrationChart(QCustomPlot *customPlot){
 
 }
 
+void MainWindow::setupNumberParticleChart(QCustomPlot *customPlot)
+{
+    customPlot->clearGraphs();
+
+    // prepare data:
+    std::cout <<"Number of Particle\n";
+
+    QVector<double> x1(hist_hi), np_e(hist_hi),np_i(hist_hi);
+    for (int i=0; i<x1.size(); ++i)
+    {
+        x1[i] = t_array[i];
+        np_e[i] = np_hist[0][i];
+        np_i[i] = np_hist[1][i];
+
+        std::cout << t_array[i]/dt <<"\t"<< np_hist[0][i]<<"\t"<< np_hist[1][i]<<"\n";
+    }
+
+    // add data and plot
+    QCPGraph *graph1 = customPlot->addGraph();
+    graph1->setData(x1, np_e);
+    QCPGraph *graph2 = customPlot->addGraph();
+    graph2->setData(x1, np_i);
+
+
+     // graph1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QPen(Qt::black, 1.5), QBrush(Qt::white), 9));
+     graph1->setPen(QPen(QColor(120, 120, 120), 2));
+
+     customPlot->xAxis->setLabel("Time, s");
+     customPlot->yAxis->setLabel("Jwall, eV");
+
+      // set some pens, brushes and backgrounds:
+      customPlot->xAxis->setBasePen(QPen(Qt::black, 1));
+      customPlot->yAxis->setBasePen(QPen(Qt::black, 1));
+      customPlot->xAxis->setTickPen(QPen(Qt::black, 1));
+      customPlot->yAxis->setTickPen(QPen(Qt::black, 1));
+      customPlot->xAxis->setSubTickPen(QPen(Qt::blue, 1));
+      customPlot->yAxis->setSubTickPen(QPen(Qt::blue, 1));
+      customPlot->xAxis->setTickLabelColor(Qt::black);
+      customPlot->yAxis->setTickLabelColor(Qt::black);
+      customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+      customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+      customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+      customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+      customPlot->xAxis->grid()->setSubGridVisible(true);
+      customPlot->yAxis->grid()->setSubGridVisible(true);
+      customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+      customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+
+      customPlot->rescaleAxes();
+      customPlot->replot();
+
+}
+
+void MainWindow::setupRealtimeDataDemo(QCustomPlot *customPlot)
+{
+#if QT_VERSION < QT_VERSION_CHECK(4, 7, 0)
+  QMessageBox::critical(this, "", "You're using Qt < 4.7, the realtime data demo needs functions that are available with Qt 4.7 to work properly");
+#endif
+//  demoName = "Real Time Data Demo";
+
+  // include this section to fully disable antialiasing for higher performance:
+  /*
+  customPlot->setNotAntialiasedElements(QCP::aeAll);
+  QFont font;
+  font.setStyleStrategy(QFont::NoAntialias);
+  customPlot->xAxis->setTickLabelFont(font);
+  customPlot->yAxis->setTickLabelFont(font);
+  customPlot->legend->setFont(font);
+  */
+  customPlot->addGraph(); // blue line
+  customPlot->graph(0)->setPen(QPen(Qt::blue));
+  customPlot->graph(0)->setBrush(QBrush(QColor(240, 255, 200)));
+  customPlot->graph(0)->setAntialiasedFill(false);
+  customPlot->addGraph(); // red line
+  customPlot->graph(1)->setPen(QPen(Qt::red));
+  customPlot->graph(0)->setChannelFillGraph(customPlot->graph(1));
+
+  customPlot->addGraph(); // blue dot
+  customPlot->graph(2)->setPen(QPen(Qt::blue));
+  customPlot->graph(2)->setLineStyle(QCPGraph::lsNone);
+  customPlot->graph(2)->setScatterStyle(QCPScatterStyle::ssDisc);
+  customPlot->addGraph(); // red dot
+  customPlot->graph(3)->setPen(QPen(Qt::red));
+  customPlot->graph(3)->setLineStyle(QCPGraph::lsNone);
+  customPlot->graph(3)->setScatterStyle(QCPScatterStyle::ssDisc);
+
+  customPlot->xAxis->setTickLabelType(QCPAxis::ltDateTime);
+  customPlot->xAxis->setDateTimeFormat("hh:mm:ss");
+  customPlot->xAxis->setAutoTickStep(false);
+  customPlot->xAxis->setTickStep(2);
+  customPlot->axisRect()->setupFullAxesBox();
+
+  // make left and bottom axes transfer their ranges to right and top axes:
+  connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->xAxis2, SLOT(setRange(QCPRange)));
+  connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->yAxis2, SLOT(setRange(QCPRange)));
+
+  // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+  connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
+  dataTimer.start(0); // Interval 0 means to refresh as fast as possible
+}
+
 void MainWindow::setupData(QCustomPlot *customPlot){
     customPlot->clearGraphs();
 
@@ -189,6 +297,12 @@ void MainWindow::setupData(QCustomPlot *customPlot){
       customPlot->rescaleAxes();
       customPlot->replot();
 
+}
+
+void MainWindow::realtimeDataSlot()
+{
+    setupPotentialChart(ui->chart);
+    setupConcentrationChart(ui->chart_2);
 }
 
 void MainWindow::setupStyledDemo(QCustomPlot *customPlot)
@@ -290,5 +404,4 @@ void MainWindow::setupStyledDemo(QCustomPlot *customPlot)
   customPlot->rescaleAxes();
   customPlot->yAxis->setRange(0, 2);
 }
-
 
