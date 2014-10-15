@@ -2,7 +2,9 @@
 #define WORKTHREAD_H
 
 #include <pds.h>
+//#include <mainwindow.h>
 #include <QThread>
+#include <QMutex>
 
 class WorkThread : public QThread
 {
@@ -13,6 +15,7 @@ public:
 
     int argc;
     char **argv;
+    QMutex* mutex;
 
 signals:
     void DataChanged();

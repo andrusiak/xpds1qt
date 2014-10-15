@@ -15,14 +15,17 @@ SOURCES  += mainwindow.cpp \
         mcc.c \
         initwin.c \
         fft.c \
-    workthread.cpp
+    workthread.cpp \
+    chartwidget.cpp
 
 HEADERS  += mainwindow.h \
          qcustomplot.h \
          pds1.h \
     workthread.h \
-    pds.h
+    pds.h \
+    chartwidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    chartwidget.ui
 
 CONFIG += console

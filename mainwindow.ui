@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>688</width>
-    <height>600</height>
+    <width>700</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>40</y>
       <width>551</width>
       <height>271</height>
      </rect>
@@ -28,13 +28,62 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>350</y>
       <width>551</width>
       <height>261</height>
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>311</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Concentration</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Number of particles</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Potential</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electric field</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>561</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="layout">
+     <item>
+      <widget class="ChartWidget" name="chart_widget">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -82,6 +131,16 @@
      </item>
     </layout>
    </widget>
+   <widget class="ChartWidget" name="chart_widget_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>559</width>
+      <height>609</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -98,6 +157,12 @@
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ChartWidget</class>
+   <extends>QFrame</extends>
+   <header>chartwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

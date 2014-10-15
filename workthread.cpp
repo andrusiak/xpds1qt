@@ -37,8 +37,12 @@ void WorkThread::run()
 
 //    printf("#%d\t%f\t%d\n",step,t, hist_hi);
       if((step+1)%100000==0){
+//          mutex->unlock();
           emit DataChanged();
           this->terminate();
-      } else step++;
+      } else {
+          step++;
+//          mutex->lock();
+        }
     }
 }

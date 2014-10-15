@@ -4,9 +4,10 @@
 
 #include <QMainWindow>
 #include "qcustomplot.h"
+#include "chartwidget.h"
 
 #include "workthread.h"
-#include "pds.h"
+//#include "pds.h"s
 
 
 namespace Ui {
@@ -24,16 +25,7 @@ public:
     int argc;
     char **argv;
 
-    WorkThread * mThread;
-
-    void setupPotentialChart(QCustomPlot *customPlot);
-    void setupConcentrationChart(QCustomPlot *customPlot);
-    void setupNumberParticleChart(QCustomPlot *customPlot);
-
-    void setupRealtimeDataDemo(QCustomPlot *customPlot);
-
-    void setupData(QCustomPlot *customPlot);
-    void setupStyledDemo(QCustomPlot *customPlot);
+    WorkThread* mThread;
 
 private slots:
     void on_startButton_clicked();
