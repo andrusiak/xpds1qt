@@ -7,7 +7,7 @@
 #include "chartwidget.h"
 
 #include "workthread.h"
-//#include "pds.h"s
+//#include "pds.h"
 
 
 namespace Ui {

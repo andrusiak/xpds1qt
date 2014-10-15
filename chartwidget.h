@@ -2,7 +2,7 @@
 #define CHARTWIDGET_H
 
 #include <QFrame>
-#include "pds.h"
+//#include "pds.h"
 #include <iostream>
 
 namespace Ui {
