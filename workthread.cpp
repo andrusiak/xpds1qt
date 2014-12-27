@@ -1,5 +1,9 @@
 #include "workthread.h"
+#include <QFile>
+#include <QTextStream>
 #include <QtCore>
+#include <iostream>
+
 
 WorkThread::WorkThread(QObject *parent) :
     QThread(parent)
@@ -13,6 +17,11 @@ void WorkThread::run()
     /* function calls SPECIES and LOAD or Restore            */
     start_(argc, argv);
 
+   // init output file
+    QString filename = "Qdust(t).txt";
+    QFile file(filename);
+
+
    // InitWindows(argc, argv);
 
     history();
@@ -20,25 +29,34 @@ void WorkThread::run()
 
     int step=0;
     float *pot = phi;
-    while(True)
-    {
-      t += dt;
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream(&file);
+        stream.setRealNumberPrecision(20);
 
-      move();
-      adjust();
-      mcc();
-      fields();
-      history();
+        while(True)
+        {
+          if(!stop){
+//            mutex.lock();
+              t += dt;
 
-      pot = phi;
- //      pot = phi[nc/2];
+              move();
+              adjust();
+              mcc();
+              fields();
+              history();
 
-//       printf("%f\t", phi[nc/2]);
+              if(((int)(t/dt))%2==0) stream << t<<"\t"<< qdust << "\t"<< energy_flux[0] <<"\t"<<  energy_flux[1] << endl;
 
-//    printf("#%d\t%f\t%d\n",step,t, hist_hi);
-      if((step+1)%100000==0){
-          emit DataChanged();
-          this->terminate();
-      } else step++;
+             if(step%200==0 && step>0) {
+//                 stop=true;
+                 std::cout<< "Step "<<step<<": a signal sent to save data\n"<<endl;
+                 emit DataChanged();
+             }
+
+            } else{
+                this->msleep(50);
+            }
+            step++;
+        }
     }
 }

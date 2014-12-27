@@ -14,33 +14,13 @@
    <string>Dusty Plasma Sumilation | Spherical system</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QCustomPlot" name="chart" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>551</width>
-      <height>271</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="chart_2" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>551</width>
-      <height>261</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>580</x>
       <y>10</y>
       <width>97</width>
-      <height>111</height>
+      <height>161</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -79,6 +59,59 @@
         <bool>true</bool>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="stopButton">
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="saveButton">
+       <property name="text">
+        <string>Save to file</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>180</y>
+      <width>95</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="phys_params_layout">
+     <item>
+      <widget class="QLineEdit" name="timeBox"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="dustChargeBox"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="energyFluxBox"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>561</width>
+      <height>561</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QCustomPlot" name="chart" native="true"/>
+     </item>
+     <item>
+      <widget class="QCustomPlot" name="chart_2" native="true"/>
      </item>
     </layout>
    </widget>

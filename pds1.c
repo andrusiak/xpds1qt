@@ -200,6 +200,9 @@ char *pargv[];
   np_hist= (float  **)malloc(nsp*sizeof(float  *));
   kes_hist= (float  **)malloc(nsp*sizeof(float  *));
   jwall_hist= (float  **)malloc(nsp*sizeof(float  *));
+
+  qdust_hist= (float  *)malloc(HISTMAX*sizeof(float));
+  qdust = 0.0;
   
   for(i=0; i<nsp; i++)
     {
@@ -283,6 +286,8 @@ char *pargv[];
       /* Conversions from physical to code units */
       qm[isp]= q[isp]/m[isp];
       q[isp] *= nc2p;
+
+      energy_flux[isp]=0.0;
       
       /* Normalize  "enter" to = no. particles injected PER DT */
       if((enter[isp][0] = jj0[isp][0]*FOURPI*r0*r0*dt/fabs(q[isp])) > 0.) inject[isp]= 1;

@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include <QMainWindow>
 #include "qcustomplot.h"
-
+#include "string.h"
 #include "workthread.h"
 #include "pds.h"
 
+#define DEBUG false
 
 namespace Ui {
 class MainWindow;
@@ -34,11 +34,17 @@ public:
 
     void setupData(QCustomPlot *customPlot);
     void setupStyledDemo(QCustomPlot *customPlot);
+    void saveToFile(QVector<double> x, QVector<double> y, QString filename);
+    void saveToFile2(QVector<double> x, QVector<double> y, QVector<double> y2, QString filename);
+
 
 private slots:
-    void on_startButton_clicked();
     void onDataChanged();
     void realtimeDataSlot();
+
+    void on_startButton_clicked();
+    void on_saveButton_clicked();
+    void on_stopButton_clicked();
 
 private:
     Ui::MainWindow *ui;

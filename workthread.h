@@ -3,6 +3,7 @@
 
 #include <pds.h>
 #include <QThread>
+#include <QMutex>
 
 class WorkThread : public QThread
 {
@@ -13,9 +14,12 @@ public:
 
     int argc;
     char **argv;
+    QMutex mutex;
+    bool stop;
 
 signals:
     void DataChanged();
+
 };
 
 #endif // WORKTHREAD_H

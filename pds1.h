@@ -57,12 +57,15 @@ GLOBAL float nc2p, r0, r1, area, rhoback, backj, dde, epsilon,extr,
              df, ramp, theta0, b0, jwall[NSMAX], qm[NSMAX], q[NSMAX], m[NSMAX],
              jj0[NSMAX][2], v0[NSMAX][2], vt[NSMAX][2], vc[NSMAX][2],
              vtpt[NSMAX], emin[NSMAX], de[NSMAX], dtheta[NSMAX],
-             Escale[NSMAX], risetime, enter[NSMAX][2];
+             Escale[NSMAX], risetime, enter[NSMAX][2],
+             qdust, //the charge of dust grain
+             energy_flux[NSMAX];//the flux of energy on the particle
 
 GLOBAL int nsp, nc, ng, ntri, secondary, ecolsp, icolsp, secsp, ionsp, 
            ecollisional, icollisional, hist_hi, thist_hi, freq_hi, interval,
            np[NSMAX], Index[1024], nfft, src, dcramped, nbin[NSMAX], reflux,
-           inject[NSMAX], maxnp[NSMAX];
+           inject[NSMAX], maxnp[NSMAX],
+           energy[NSMAX];
 
 GLOBAL char freqbuf[30];
 
@@ -74,7 +77,8 @@ GLOBAL float **r, **vr, **vth, **vph, **srho, *rho, *e, *phi, *r_array,
              *te_hist, **kes_hist, *cur_hist, *com_cur_hist, **com_phi_hist,
              *cur_fft, *phi_fft, *z_fft, *mphi_fft, *Local_t_array, *ionrate,
              *iontemp, *chrgxrate, *rg, *rg3, *avene, *avenemp, **fe, **ftheta,
-             **e_array, **th_array, *Power_hist;
+             **e_array, **th_array, *Power_hist,
+             **qdust_hist;
 
 GLOBAL void  circuit1(), circuit2(), circuit3(), circuit4(), (*circuitptr)();
 GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();

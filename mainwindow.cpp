@@ -11,11 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mThread = new WorkThread(this);
 
-    connect(mThread, SIGNAL(DataChanged()), this, SLOT(onDataChanged()));
+    connect(mThread, SIGNAL(DataChanged()), this, SLOT(on_saveButton_clicked()));
 
-    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer.start(50); // Interval 0 means to refresh as fast as possible
+    // setup a timer that repeatedly calls MainWindow::onDataChanged:
+    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(onDataChanged()));
+    dataTimer.start(20); // Interval 0 means to refresh as fast as possible
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +28,8 @@ void MainWindow::on_startButton_clicked()
     mThread->argc = this->argc;
     mThread->argv = this->argv;
 
+    mThread->stop=false;
+
     ui->progressBar->setVisible(true);
 
     mThread->start();
@@ -35,32 +37,40 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::onDataChanged()
 {
-//    setupData(ui->chart);
+//    mThread->mutex.lock();
 
     setupPotentialChart(ui->chart_2);
     setupConcentrationChart(ui->chart);
+
+//    setupData(ui->chart);
 //    setupNumberParticleChart(ui->chart_2);
 
     ui->progressBar->setVisible(false);
 
-    printf("%f\t%f\n", np[0], np[1]);
+    ui->timeBox->setText(QString("Time: %1").arg(t/dt));
+    ui->dustChargeBox->setText(QString("%1").arg(qdust/1.602e-19));
+    ui->energyFluxBox->setText(QString("%1").arg(energy_flux[0],energy_flux[1]));
 
-
+    //release mutex
+//    mThread->mutex.unlock();
 }
 
 void MainWindow::setupPotentialChart(QCustomPlot *customPlot){
     customPlot->clearGraphs();
 
     // prepare data:
-
-    QVector<double> r(nc), potential(nc);
+    int size = nc*3/4;
+    QVector<double> r(size), potential(size);
 
 
     for (int i=0; i<r.size(); ++i)
     {
         r[i] = r_array[i];
         potential[i] = phi[i];
+        if(DEBUG)
+        {
         std::cout << r_array[i] <<"\t"<< potential[i]<<"\n";
+        }
     }
 
     // add data and plot
@@ -101,14 +111,19 @@ void MainWindow::setupConcentrationChart(QCustomPlot *customPlot){
 
     // prepare data:
 
-    QVector<double> r(ng), ne(ng),ni(ng);
+    int size = nc*3/4;
+
+    QVector<double> r(size), ne(size),ni(size);
 
     for (int i=0; i<r.size(); ++i)
     {
         r[i] = r_array[i];
         ne[i] = srho[0][i];
         ni[i] = srho[1][i];
+        if(DEBUG)
+        {
         std::cout << r_array[i] <<"\t"<< ne[i]<<"\t"<< ni[i]<<"\n";
+        }
     }
 
     // add data and plot
@@ -152,6 +167,7 @@ void MainWindow::setupNumberParticleChart(QCustomPlot *customPlot)
     customPlot->clearGraphs();
 
     // prepare data:
+
     std::cout <<"Number of Particle\n";
 
     QVector<double> x1(hist_hi), np_e(hist_hi),np_i(hist_hi);
@@ -161,7 +177,10 @@ void MainWindow::setupNumberParticleChart(QCustomPlot *customPlot)
         np_e[i] = np_hist[0][i];
         np_i[i] = np_hist[1][i];
 
+        if(DEBUG)
+        {
         std::cout << t_array[i]/dt <<"\t"<< np_hist[0][i]<<"\t"<< np_hist[1][i]<<"\n";
+        }
     }
 
     // add data and plot
@@ -260,7 +279,10 @@ void MainWindow::setupData(QCustomPlot *customPlot){
         jwall0[i] = jwall_hist[0][i];
         jwall1[i] = jwall_hist[1][i];
 
-        std::cout << t_array[i]/dt <<"\t"<< jwall0[i]<<"\t"<< jwall1[i]<<"\n";
+        if(DEBUG)
+        {
+            std::cout << t_array[i]/dt <<"\t"<< jwall0[i]<<"\t"<< jwall1[i]<<"\n";
+        }
     }
 
     // add data and plot
@@ -296,6 +318,36 @@ void MainWindow::setupData(QCustomPlot *customPlot){
 
       customPlot->rescaleAxes();
       customPlot->replot();
+
+}
+
+void MainWindow::saveToFile(QVector<double> x,QVector<double> y,QString filename){
+    QFile file(filename);
+    if ( file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                QTextStream stream( &file );
+
+                for (int i=0; i<x.size(); ++i)
+                {
+                    stream << x[i] << "\t" << y[i] << endl;
+                }
+                file.close();
+            }
+
+}
+
+void MainWindow::saveToFile2(QVector<double> x,QVector<double> y, QVector<double> y2,QString filename){
+    QFile file(filename);
+    if ( file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                QTextStream stream( &file );
+
+                for (int i=0; i<x.size(); ++i)
+                {
+                    stream << x[i] << "\t" << y[i]<< "\t" << y2[i] << endl;
+                }
+                file.close();
+            }
 
 }
 
@@ -405,3 +457,35 @@ void MainWindow::setupStyledDemo(QCustomPlot *customPlot)
   customPlot->yAxis->setRange(0, 2);
 }
 
+
+void MainWindow::on_saveButton_clicked()
+{
+    int size = nc*3/4;
+    char* potentialFilename="out/potential-%1.txt";
+    char* concFilename="out/ni_ne-%1.txt";
+
+    //Save potential
+    QVector<double> r(size), potential(size);
+    for (int i=0; i<size; ++i)
+    {
+        r[i] = r_array[i];
+        potential[i] = phi[i];
+    }
+    saveToFile(r,potential,QString(potentialFilename).arg((t/dt)));
+
+    //Save concentration of the electrons and ions
+    QVector<double> /*r(size),*/ ne(size),ni(size);
+    for (int i=0; i<size; ++i)
+    {
+        r[i] = r_array[i];
+        ne[i] = srho[0][i];
+        ni[i] = srho[1][i];
+    }
+    saveToFile2(r,ne,ni, QString(concFilename).arg((t/dt)));
+
+}
+
+void MainWindow::on_stopButton_clicked()
+{
+    if(!mThread->stop) mThread->stop=true;
+}

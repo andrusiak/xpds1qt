@@ -120,7 +120,7 @@ double source()
       if(t < risetime)	return (ramp*t + .5*dcbias*(1- cos(t*w0)));
       else					return (dcbias);
     }
-  else return (dcbias + ramp*t + acbias*sin(t*w0 + theta0));
+  else return (dcbias + qdust/(4* PI * EPS0 * r0*dr)+ ramp*t + acbias*sin(t*w0 + theta0));
 } 
 
 /***************************************************************/

@@ -65,15 +65,15 @@ adjust()
 		  ftheta[isp][s]  += (!s) ? 2*(1-dum) : 1-dum;
 		  ftheta[isp][s+1]+= (s==nbin[isp]-1) ? 2*dum : dum;
 		  
+          energy_flux[isp] = /*jwall[isp]*area/q[isp]**/m[isp]*(vr[isp][i]*vr[isp][i] + vth[isp][i]*vth[isp][i]+vph[isp][i]*vph[isp][i])*vscale*vscale/2 / area/dt;
+
 		  r[isp][i] = r[isp][nnp];
 		  vr[isp][i] = vr[isp][nnp];
 		  vth[isp][i] = vth[isp][nnp];
 		  vph[isp][i] = vph[isp][nnp];
 		  nnp--;
 		  
-		  jwall[isp] += q[isp]/area;
-          //TODO Number of particles to fall on dust particles
-          /////
+          jwall[isp] += q[isp]/area;
 
 		  if (secondary)
 		    {
@@ -139,7 +139,7 @@ adjust()
 		  /* Adjust Vr for effect of electric field */
 		  vr[isp][ii] += qm[isp]*(del_t-0.5)*e[k*nc]*dttx;
 		  r[isp][ii] = r0 +k*nc + del_t*vr[isp][ii];
-		  if(!k)	jwall[isp] -= q[isp]/area;
+          if(!k){	jwall[isp] -= q[isp]/area;  }
 		  extra[isp][k] -= 1;
 		}	/* end "while extra..)" loop */
 	      
@@ -180,8 +180,14 @@ adjust()
 	}
     }/* end of if(secondary) */
   
+  //Accumulate total charge of dust grain
+  for (isp=0; isp<nsp; isp++) qdust += jwall[isp]*area;
+
+  //Accumulate total energy transmitted to the dust grain
+//  for (isp=0; isp<nsp; isp++){ energy_flux[isp]+= jwall[isp]*area/q[isp]*m[isp]*;}
+
   for (isp=0; isp<nsp; isp++) jwall[isp] /= dt;
-  
+
 }/* end ADJUST */
 
 /**************************************************************/
