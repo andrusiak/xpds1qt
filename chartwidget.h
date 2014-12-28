@@ -18,6 +18,7 @@ class ChartWidget : public QFrame
 public:
     explicit ChartWidget(QWidget *parent = 0);
     ~ChartWidget();
+    setDefaultIndex(int);
 
 public slots:
     void refresh();

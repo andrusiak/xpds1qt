@@ -6,13 +6,20 @@ ChartWidget::ChartWidget(QWidget *parent) :
     ui(new Ui::ChartWidget)
 {
     ui->setupUi(this);
-    mode=0;
+    setDefaultIndex(0);
+
     prepareChart();
 }
 
 ChartWidget::~ChartWidget()
 {
     delete ui;
+}
+
+ChartWidget::setDefaultIndex(int index)
+{
+    mode = index;
+    ui->comboBox->setCurrentIndex(mode);
 }
 /** Makes pre-configuration of the chart: sets the lines, grid style, legend etc
  * @brief ChartWidget::initChart
