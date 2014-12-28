@@ -22,9 +22,9 @@ public:
     ~MainWindow();
 
     int argc;
-    char **argv;
+    char** argv;
 
-    WorkThread * mThread;
+    WorkThread* mThread;
 
     void setupPotentialChart(QCustomPlot *customPlot);
     void setupConcentrationChart(QCustomPlot *customPlot);
@@ -37,7 +37,6 @@ public:
 
 private slots:
     void onDataChanged();
-
     void on_startButton_clicked();
     void on_saveButton_clicked();
     void on_stopButton_clicked();
