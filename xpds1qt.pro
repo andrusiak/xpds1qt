@@ -25,4 +25,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+OTHER_FILES+= inp/*
+
 CONFIG += console

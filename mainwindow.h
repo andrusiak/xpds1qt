@@ -29,18 +29,14 @@ public:
     void setupPotentialChart(QCustomPlot *customPlot);
     void setupConcentrationChart(QCustomPlot *customPlot);
     void setupNumberParticleChart(QCustomPlot *customPlot);
+    void setupJwallChart(QCustomPlot *customPlot);
 
-    void setupRealtimeDataDemo(QCustomPlot *customPlot);
-
-    void setupData(QCustomPlot *customPlot);
-    void setupStyledDemo(QCustomPlot *customPlot);
     void saveToFile(QVector<double> x, QVector<double> y, QString filename);
     void saveToFile2(QVector<double> x, QVector<double> y, QVector<double> y2, QString filename);
 
 
 private slots:
     void onDataChanged();
-    void realtimeDataSlot();
 
     void on_startButton_clicked();
     void on_saveButton_clicked();
@@ -49,7 +45,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTimer dataTimer;
-    QString demoName;
 
 };
 
