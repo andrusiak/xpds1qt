@@ -8,12 +8,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    plasma = new PlasmaModel();
     mThread = new WorkThread(this);
+
+    //pass data model into working thread and to the view
+    mThread->setPlasmaModel(plasma);
+    ui->chartFrame->setDataSource(plasma);
 
 //    connect(mThread, SIGNAL(DataChanged()), this, SLOT(on_saveButton_clicked()));
 
 //    setup a timer that repeatedly calls MainWindow::onDataChanged:
     connect(&dataTimer, SIGNAL(timeout()), this, SLOT(onDataChanged()));
+    connect(&dataTimer, SIGNAL(timeout()), ui->chartFrame, SLOT(refresh()));
+
     dataTimer.start(50); // Interval 0 means to refresh as fast as possible
 }
 

@@ -6,6 +6,7 @@ TEMPLATE = app
 
 
 SOURCES  += mainwindow.cpp \
+         chartwidget.cpp \
          main.cpp\
          qcustomplot.cpp \
          prests.c \
@@ -15,15 +16,19 @@ SOURCES  += mainwindow.cpp \
          mcc.c \
          initwin.c \
          fft.c \
-         workthread.cpp
+         workthread.cpp \
+    plasmamodel.cpp
 
 HEADERS  += mainwindow.h \
+         chartwidget.h \
          qcustomplot.h \
          pds1.h \
          workthread.h \
-         pds.h
+         pds.h \
+    plasmamodel.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+         chartwidget.ui
 
 OTHER_FILES+= inp/*
 

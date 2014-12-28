@@ -47,6 +47,8 @@ void WorkThread::run()
 
               if(((int)(t/dt))%2==0) stream << t<<"\t"<< qdust << "\t"<< energy_flux[0] <<"\t"<<  energy_flux[1] << endl;
 
+              updatePlasmaModel();
+
              if(step%200==0 && step>0) {
 //                 stop=true;
                  std::cout<< "Step "<<step<<": a signal sent to save data\n"<<endl;
@@ -59,4 +61,30 @@ void WorkThread::run()
             step++;
         }
     }
+}
+
+void WorkThread::setPlasmaModel(PlasmaModel *pm)
+{
+    plasma = pm;
+}
+
+PlasmaModel *WorkThread::updatePlasmaModel()
+{
+    int size = nc*3/4;
+    //Copy values from array to QVector. Required by QCustomPlot
+    QVector<double> r(size),phi_(size),ne(size),ni(size);
+    for(int i=0; i<size;i++){
+        r[i] = r_array[i];
+        phi_[i] = phi[i];
+        ne[i] = srho[0][i];
+        ni[i] = srho[1][i];
+    }
+
+    //Set the vectors into model
+    plasma->setR(r);
+    plasma->setPhiDistribution(phi_);
+    plasma->setElectronConcDistribution(ne);
+    plasma->setIonConcDistribution(ni);
+
+    return plasma;
 }

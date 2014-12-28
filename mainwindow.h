@@ -6,6 +6,7 @@
 #include "string.h"
 #include "workthread.h"
 #include "pds.h"
+#include "plasmamodel.h"
 
 #define DEBUG false
 
@@ -25,6 +26,7 @@ public:
     char** argv;
 
     WorkThread* mThread;
+    PlasmaModel* plasma;
 
     void setupPotentialChart(QCustomPlot *customPlot);
     void setupConcentrationChart(QCustomPlot *customPlot);

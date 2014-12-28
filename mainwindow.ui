@@ -98,8 +98,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>561</width>
-      <height>561</height>
+      <width>521</width>
+      <height>581</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -118,11 +118,30 @@
      </item>
      <item>
       <widget class="QCustomPlot" name="chart_2" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>519</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>559</width>
          <height>276</height>
         </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="ChartWidget" name="chartFrame">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>100</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
       </widget>
      </item>
@@ -136,6 +155,12 @@
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
    <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ChartWidget</class>
+   <extends>QFrame</extends>
+   <header>chartwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
