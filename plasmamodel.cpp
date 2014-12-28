@@ -30,6 +30,16 @@ void PlasmaModel::setIonConcDistribution(QVector<double> ni_r)
     this->ni = ni_r;
 }
 
+void PlasmaModel::setElectronsNumber(QVector<double> npe_r)
+{
+    this->np_e = npe_r;
+}
+
+void PlasmaModel::setIonsNumber(QVector<double> npi_r)
+{
+    this->np_i = npi_r;
+}
+
 QVector<double> PlasmaModel::getR()
 {
     return r;
@@ -50,4 +60,13 @@ QVector<double> PlasmaModel::getIonConcDistribution()
     return ni;
 }
 
+QVector<double> PlasmaModel::getElectronsNumber()
+{
+    return np_e;
+}
+
+QVector<double> PlasmaModel::getIonsNumber()
+{
+    return np_i;
+}
 

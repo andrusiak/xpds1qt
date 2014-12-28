@@ -13,20 +13,25 @@ public:
 
     void setR(QVector<double>);
     void setPhiDistribution(QVector<double>);
-    void setIonConcDistribution(QVector<double>);
     void setElectronConcDistribution(QVector<double>);
+    void setIonConcDistribution(QVector<double>);
+    void setElectronsNumber(QVector<double>);
+    void setIonsNumber(QVector<double>);
 
     QVector<double> getR(); //returns r vector
     QVector<double> getPhiDistribution(); //returns phi vector
-    QVector<double> getIonConcDistribution();//returns ne
-    QVector<double> getElectronConcDistribution();//returns ni
+    QVector<double> getElectronConcDistribution();//returns ne
+    QVector<double> getIonConcDistribution();//returns ni
+    QVector<double> getElectronsNumber(); //returns np_e
+    QVector<double> getIonsNumber();//returns np_i
 
 private:
     QVector<double> r;   //radial coordinate
-    QVector<double> phi; //Potential
+    QVector<double> phi; //potential
     QVector<double> ne;// radial distribution of electron concentration
     QVector<double> ni;// radial distribution of ion concentration
-
+    QVector<double> np_e;// number of electrons
+    QVector<double> np_i;// number of ions
 
 signals:
 

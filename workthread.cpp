@@ -72,12 +72,14 @@ PlasmaModel *WorkThread::updatePlasmaModel()
 {
     int size = nc*3/4;
     //Copy values from array to QVector. Required by QCustomPlot
-    QVector<double> r(size),phi_(size),ne(size),ni(size);
+    QVector<double> r(size),phi_(size),ne(size),ni(size),npe(size),npi(size);
     for(int i=0; i<size;i++){
         r[i] = r_array[i];
         phi_[i] = phi[i];
         ne[i] = srho[0][i];
         ni[i] = srho[1][i];
+        npe[i] = np_hist[0][i];
+        npi[i] = np_hist[1][i];
     }
 
     //Set the vectors into model
@@ -85,6 +87,8 @@ PlasmaModel *WorkThread::updatePlasmaModel()
     plasma->setPhiDistribution(phi_);
     plasma->setElectronConcDistribution(ne);
     plasma->setIonConcDistribution(ni);
+    plasma->setElectronsNumber(npe);
+    plasma->setIonsNumber(npi);
 
     return plasma;
 }

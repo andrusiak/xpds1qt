@@ -13,7 +13,6 @@ public:
     explicit WorkThread(QObject *parent = 0);
     void setPlasmaModel(PlasmaModel*);
     PlasmaModel* updatePlasmaModel();
-
     void run();
 
     int argc;
@@ -24,7 +23,6 @@ public:
 
 signals:
     void DataChanged();
-
 };
 
 #endif // WORKTHREAD_H

@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+     ui->chartFrame->setDefaultIndex(0);
+     ui->chartFrame_2->setDefaultIndex(2);
 
     plasma = new PlasmaModel();
     mThread = new WorkThread(this);
