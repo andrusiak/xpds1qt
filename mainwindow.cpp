@@ -7,15 +7,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->progressBar->setVisible(false);
 
-//    mThread = new WorkThread(this);
+    mThread = new WorkThread(this);
 
 //    connect(mThread, SIGNAL(DataChanged()), this, SLOT(on_saveButton_clicked()));
 
-    // setup a timer that repeatedly calls MainWindow::onDataChanged:
-//    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(onDataChanged()));
-//    dataTimer.start(50); // Interval 0 means to refresh as fast as possible
+//    setup a timer that repeatedly calls MainWindow::onDataChanged:
+    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(onDataChanged()));
+    dataTimer.start(50); // Interval 0 means to refresh as fast as possible
 }
 
 MainWindow::~MainWindow()
@@ -30,8 +29,6 @@ void MainWindow::on_startButton_clicked()
 
     mThread->stop=false;
 
-    ui->progressBar->setVisible(true);
-
     mThread->start();
 }
 
@@ -39,13 +36,12 @@ void MainWindow::onDataChanged()
 {
 //    mThread->mutex.lock();
 
-//    setupPotentialChart(ui->chart_2);
-//    setupConcentrationChart(ui->chart);
+    setupConcentrationChart(ui->chart);
+    setupPotentialChart(ui->chart_2);
+
 
 //    setupData(ui->chart);
 //    setupNumberParticleChart(ui->chart_2);
-
-    ui->progressBar->setVisible(false);
 
     ui->timeBox->setText(QString("Time: %1").arg(t/dt));
     ui->dustChargeBox->setText(QString("%1").arg(qdust/1.602e-19));
@@ -103,7 +99,7 @@ void MainWindow::setupPotentialChart(QCustomPlot *customPlot){
       customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
 
       customPlot->rescaleAxes();
-//      customPlot->replot();
+      customPlot->replot();
 
 }
 
@@ -175,7 +171,7 @@ void MainWindow::setupConcentrationChart(QCustomPlot *customPlot){
       customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
 
       customPlot->rescaleAxes();
-//      customPlot->replot();
+      customPlot->replot();
 }
 
 void MainWindow::setupNumberParticleChart(QCustomPlot *customPlot)
