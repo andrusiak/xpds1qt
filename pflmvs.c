@@ -144,7 +144,7 @@ move ()
   
   for (isp=0; isp<nsp; isp++)
   {	
-    for (j=0; j<=nc; j++) a1[j] = e[j]*qm[isp]*dttx;
+    if(!MDFIELDS) for (j=0; j<=nc; j++) a1[j] = e[j]*qm[isp]*dttx;
     
     /* ONE-velocity accelerator, plus mover */
     for (i=np[isp]-1; i>=0; i--)
@@ -167,8 +167,15 @@ move ()
 	  s =(r1*r1*r1-r[isp][i]*r[isp][i]*r[isp][i])/
 	    (r1*r1*r1-(r[isp][i]-.5)*(r[isp][i]-.5)*(r[isp][i]-.5));
 	
-	vr[isp][i] += a1[j] + s*(a1[j+1] - a1[j])+vptemp*vptemp/r[isp][i];
-	r[isp][i] += vr[isp][i];
+    //pole
+    if(MDFIELDS){
+        printf("Velocity:%f %f\n",vr[isp][i],qm[isp]*dttx*e[i+isp*nsp]);
+        vr[isp][i] += qm[isp]*dttx*e[i+isp*nsp];
+    }else{
+        vr[isp][i] += a1[j] + s*(a1[j+1] - a1[j])+vptemp*vptemp/r[isp][i];
+    }
+
+    r[isp][i] += vr[isp][i];
 	vptemp = cthe/r[isp][i];
 	s= frand();
 	vth[isp][i] = s*vptemp;

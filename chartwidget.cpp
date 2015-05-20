@@ -18,6 +18,7 @@ ChartWidget::~ChartWidget()
 ChartWidget::setDefaultIndex(int index)
 {
     mode = index;
+//    this->refresh();
 //    ui->comboBox->setCurrentIndex(mode);
 }
 /** Makes pre-configuration of the chart: sets the lines, grid style, legend etc
@@ -49,6 +50,21 @@ void ChartWidget::prepareChart(){
         graphs[0]->setPen(QPen(Qt::blue,1));
         customPlot->xAxis->setLabel("r");
         customPlot->yAxis->setLabel("Potential, eV");
+    case 3:
+        graphs.append(customPlot->addGraph());
+
+//        graphs[0]->setPen(QPen(Qt::green,1));
+        customPlot->xAxis->setLabel("r");
+        customPlot->yAxis->setLabel("Field, eV");
+     case 4: //Q_d
+        graphs.append(customPlot->addGraph());
+        customPlot->xAxis->setLabel("time");
+        customPlot->yAxis->setLabel("Dust grain charge, in e");
+     case 5: //dE_d
+       graphs.append(customPlot->addGraph());
+       customPlot->xAxis->setLabel("Time");
+       customPlot->yAxis->setLabel("Ion energy flux");
+
     }
 
         // set some pens, brushes and backgrounds:
@@ -81,6 +97,16 @@ void ChartWidget::refresh(){
     case 2:
         graphs[0]->setData(plasma->getR(),plasma->getPhiDistribution());
         break;
+    case 3:
+        graphs[0]->setData(plasma->getR(),plasma->getFieldDistribution());
+        break;
+    case 4:
+        graphs[0]->setData(plasma->getTime(),plasma->getDustCharge());
+        break;
+    case 5:
+        graphs[0]->setData(plasma->getTime(),plasma->getEnergyFluxes());
+        break;
+
     }
     ui->chart->rescaleAxes();
     ui->chart->replot();

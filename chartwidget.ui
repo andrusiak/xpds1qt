@@ -5,6 +5,14 @@
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>125</width>
+    <height>42</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
@@ -47,6 +55,16 @@
      <item>
       <property name="text">
        <string>Electric field</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Dust grain charge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Energy Fluxes</string>
       </property>
      </item>
     </widget>

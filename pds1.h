@@ -12,6 +12,7 @@
 //#include<X11/Xlib.h>
 //#include<xgrafix.h>
 
+#define e0              1.602e-19
 #define TWOPI			6.28318530717959
 #define FOURPI			12.5663706
 #define PI			3.141592653589793
@@ -20,6 +21,8 @@
 #define NSMAX 			4
 #define NEMAX 			500
 #define HISTMAX 		512  	/* upper bound on histories */
+
+#define MDFIELDS        1  /* 1 - enable the molecular dynamics mode of the field calculation */
 
 #ifndef max
 #define max(x, y)       (((x) > (y)) ? (x) : (y))
@@ -78,7 +81,8 @@ GLOBAL float **r, **vr, **vth, **vph, **srho, *rho, *e, *phi, *r_array,
              *cur_fft, *phi_fft, *z_fft, *mphi_fft, *Local_t_array, *ionrate,
              *iontemp, *chrgxrate, *rg, *rg3, *avene, *avenemp, **fe, **ftheta,
              **e_array, **th_array, *Power_hist,
-             **qdust_hist;
+             **qdust_hist,
+             *r1d,*q1, *tmp, **tmp2d;// for mdfields
 
 GLOBAL void  circuit1(), circuit2(), circuit3(), circuit4(), (*circuitptr)();
 GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
@@ -86,6 +90,8 @@ GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
 GLOBAL int pds_main(int, char **);
 
 GLOBAL int start_(int, char **);
-GLOBAL void history(), move(), adjust(), mcc(), fields();
+GLOBAL void history(), move(), adjust(), mcc(), fields(), mdfields();
+
+GLOBAL void swap_idx(float*, long*, float*, long), swap2d_idx(float**, long*, float*, long);
 
 #undef GLOBAL

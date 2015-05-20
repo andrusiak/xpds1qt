@@ -37,6 +37,8 @@ private:
     void setupPotentialChart();
     void setupConcentrationChart();
     void setupNumberParticleChart();
+    void setupFieldChart();
+
 };
 
 #endif // CHARTWIDGET_H

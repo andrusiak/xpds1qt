@@ -2,13 +2,15 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 
+#define AUTOSTART true
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-     ui->chartFrame->setDefaultIndex(0);
-     ui->chartFrame_2->setDefaultIndex(2);
+    ui->chartFrame->setDefaultIndex(0);
+    ui->chartFrame_2->setDefaultIndex(2);
 
     plasma = new PlasmaModel();
     mThread = new WorkThread(this);
@@ -27,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&dataTimer, SIGNAL(timeout()), ui->chartFrame_2, SLOT(refresh()));
 
     dataTimer.start(50); // Interval 0 means to refresh as fast as possible
+
+//    if(AUTOSTART) on_startButton_clicked();
 }
 
 MainWindow::~MainWindow()

@@ -1,16 +1,16 @@
 RF DISCHARGE (IN MKS UNITS)--( A1/A0 = 5.)---argon plasma----    
 
 -nsp---nc---nc2p-----dt[s]-----r0[m]---r1[m]-----epsilonr--
-  2   200   2e2  1e-11  0.000050    0.0005        2.
+  2   200   200000     1e-11      50e-6    500e-6        2.
 
 -rhoback[C/m^3]---backj[Amp/m^2]---dde--extR[Ohm]--extL[H]---extC[F]--q0[C]-
      0.0               0.0         0.0    0.0       0.0      3.2e-1   0.0 
 
 -dcramped--source--dc[V|Amp]--ramp[(V|Amp)/s]---ac[V|Amp]---f0[Hz]--theta0[D]-
-   0         v        1.0          0.0           0.0       0       0.0     
+   0         v        0.0        0.0           0.0       0       0.0     
 
 ---secondary----e_collisional---i_collisional----reflux---nfft--
-      0             0            	   1          	  0	     512
+      0             0            	   1          	 1	     512
 
 ---seec(electrons)---seec(ions)---ion species---Gpressure[Torr]---GTemp[eV]---
          0.0            0.2	      2	              3e-2         .026 	
@@ -35,22 +35,22 @@ ION-NEUTRAL COLLISIONAL PARAMETERS-----
 SPECIES 1:
 
 ----q[C]-------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]--
- -1.602e-19   9.11e-31     0.             6.7095e2           1e16       
+ -1.602e-19   9.11e-31     0.             0           1e16
 
 --v0L[m/s]--v0R[m/s]--vtL[m/s]--vtR[m/s]--vcL[m/s]--vcR[m/s]--vtperp[m/s]--
     0.0      0.0       1e5       1e5        0.0       0.0      1.414e5  
 
 ---nbin----Emin[eV]----Emax[eV]---max_np---
-    50       0	        100       500000
+    50       0	        100       50000
 
 
 SPECIES 2:
 
 ----q[C] ------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]--
-  1.602e-19   6.68e-26    0.              2.47623         1e16       
+  1.602e-19   6.68e-26    0.              0        1e16
 
 --v0L[m/s]--v0R[m/s]--vtL[m/s]--vtR[m/s]--vcL[m/s]--vcR[m/s]--vtperp[m/s]---
     0.0      0.0       1e4       1e4       0.0        0.0	1.414e4
 
 ---nbin----Emin[eV]----Emax[eV]---max_np---
-    50       0	        100       500000
+    50       0	        100       50000

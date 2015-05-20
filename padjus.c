@@ -65,8 +65,7 @@ adjust()
 		  ftheta[isp][s]  += (!s) ? 2*(1-dum) : 1-dum;
 		  ftheta[isp][s+1]+= (s==nbin[isp]-1) ? 2*dum : dum;
 		  
-          energy_flux[isp] = /*jwall[isp]*area/q[isp]**/m[isp]*(vr[isp][i]*vr[isp][i] + vth[isp][i]*vth[isp][i]+vph[isp][i]*vph[isp][i])*vscale*vscale/2 / area/dt;
-
+          energy_flux[isp] = m[isp]*(vr[isp][i]*vr[isp][i] + vth[isp][i]*vth[isp][i]+vph[isp][i]*vph[isp][i])*vscale*vscale/2/area/dt;
 		  r[isp][i] = r[isp][nnp];
 		  vr[isp][i] = vr[isp][nnp];
 		  vth[isp][i] = vth[isp][nnp];
@@ -137,7 +136,11 @@ adjust()
 		  vph[isp][ii] = vmag*cos(theta);
 		  
 		  /* Adjust Vr for effect of electric field */
-		  vr[isp][ii] += qm[isp]*(del_t-0.5)*e[k*nc]*dttx;
+          if(MDFIELDS){
+              vr[isp][ii] += qm[isp]*(del_t-0.5)*e[nsp*np[nsp]-1]*dttx;
+          }else{
+              vr[isp][ii] += qm[isp]*(del_t-0.5)*e[k*nc]*dttx;
+          }
 		  r[isp][ii] = r0 +k*nc + del_t*vr[isp][ii];
           if(!k){	jwall[isp] -= q[isp]/area;  }
 		  extra[isp][k] -= 1;

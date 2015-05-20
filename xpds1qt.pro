@@ -16,6 +16,7 @@ SOURCES  += mainwindow.cpp \
          mcc.c \
          initwin.c \
          fft.c \
+         mdfields.c \
          workthread.cpp \
     plasmamodel.cpp
 
