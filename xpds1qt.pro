@@ -18,7 +18,7 @@ SOURCES  += mainwindow.cpp \
          fft.c \
          mdfields.c \
          workthread.cpp \
-    plasmamodel.cpp
+         plasmamodel.cpp
 
 HEADERS  += mainwindow.h \
          chartwidget.h \
@@ -26,7 +26,7 @@ HEADERS  += mainwindow.h \
          pds1.h \
          workthread.h \
          pds.h \
-    plasmamodel.h
+         plasmamodel.h
 
 FORMS    += mainwindow.ui \
          chartwidget.ui

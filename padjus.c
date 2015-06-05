@@ -71,6 +71,9 @@ adjust()
 		  vth[isp][i] = vth[isp][nnp];
 		  vph[isp][i] = vph[isp][nnp];
 		  nnp--;
+
+          //TODO
+          if(reflux)	nreflux[isp]++;
 		  
           jwall[isp] += q[isp]/area;
 
@@ -137,7 +140,8 @@ adjust()
 		  
 		  /* Adjust Vr for effect of electric field */
           if(MDFIELDS){
-              vr[isp][ii] += qm[isp]*(del_t-0.5)*e[nsp*np[nsp]-1]*dttx;
+              int index = k*(nsp*np[isp]-1); //TODO
+              vr[isp][ii] += qm[isp]*(del_t-0.5)*e[index]*dttx;
           }else{
               vr[isp][ii] += qm[isp]*(del_t-0.5)*e[k*nc]*dttx;
           }

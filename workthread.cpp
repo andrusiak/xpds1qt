@@ -23,9 +23,9 @@ void WorkThread::run()
 
     history();
 
-    MDFIELDS? mdfields(): fields();
+    MDFIELDS? mdfields2(): fields();
 
-    int step=0;
+    step=0;
     if (file.open(QIODevice::WriteOnly)) {
         QTextStream stream(&file);
         stream.setRealNumberPrecision(20);
@@ -39,7 +39,7 @@ void WorkThread::run()
               move();
               adjust();
               mcc();
-              MDFIELDS? mdfields(): fields();
+              MDFIELDS ? mdfields2(): fields();
               history();
 
               if(((int)(t/dt))%2==0) stream << t<<"\t"<< qdust << "\t"<< energy_flux[0] <<"\t"<<  energy_flux[1] << endl;
@@ -74,21 +74,31 @@ PlasmaModel *WorkThread::updatePlasmaModel()
 
     for(int i=0; i<size;i++){
         r[i] = r_array[i];
-        phi_[i] = phi[i];
-        e_[i] = e[i];
-        ne[i] = srho[0][i];
-        ni[i] = srho[1][i];
-        npe[i] = np_hist[0][i];
-        npi[i] = np_hist[1][i];
         time.push_back(t/dt);
         Q_d.push_back(qdust/e0);
         dE_d.push_back(energy_flux[0]);
+
+        if(MDFIELDS){
+            phi_[i] = phi_md[i];
+            e_[i]=e_md[i];
+            npe[i] = np_hist[0][i];
+            npi[i] = np_hist[1][i];
+            ne[i] = srho_md[0][i];
+            ni[i] = srho_md[1][i];
+        } else{
+            phi_[i] = phi[i];
+            e_[i] = e[i];
+            npe[i] = np_hist[0][i];
+            npi[i] = np_hist[1][i];
+            ne[i] = srho[0][i];
+            ni[i] = srho[1][i];
+        }
     }
 
     //Set the vectors into model and so to the views
     plasma->setR(r);
     plasma->setTime(time);
-    if(!MDFIELDS) plasma->setPhiDistribution(phi_);
+    plasma->setPhiDistribution(phi_);
     plasma->setFieldDistribution(e_);
     plasma->setElectronConcDistribution(ne);
     plasma->setIonConcDistribution(ni);

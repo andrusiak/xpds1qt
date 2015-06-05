@@ -33,6 +33,18 @@ void ChartWidget::prepareChart(){
     case 0:
         customPlot->xAxis->setLabel("r");
         customPlot->yAxis->setLabel("Concentration");
+
+        graphs.append(customPlot->addGraph());
+        graphs.append(customPlot->addGraph());
+
+        graphs[0]->setPen(QPen(Qt::blue,1));
+        graphs[1]->setPen(QPen(Qt::red,1));
+
+        graphs[0]->setName("Electrons");
+        graphs[1]->setName("Ions");
+
+        customPlot->legend->setVisible(true);
+        break;
     case 1:
 
         customPlot->xAxis->setLabel("r");
@@ -43,6 +55,11 @@ void ChartWidget::prepareChart(){
 
         graphs[0]->setPen(QPen(Qt::blue,1));
         graphs[1]->setPen(QPen(Qt::red,1));
+
+        graphs[0]->setName("Electrons");
+        graphs[1]->setName("Ions");
+
+        customPlot->legend->setVisible(true);
         break;
     case 2:
         graphs.append(customPlot->addGraph());
@@ -50,21 +67,29 @@ void ChartWidget::prepareChart(){
         graphs[0]->setPen(QPen(Qt::blue,1));
         customPlot->xAxis->setLabel("r");
         customPlot->yAxis->setLabel("Potential, eV");
+
+        customPlot->legend->setVisible(false);
+        break;
     case 3:
         graphs.append(customPlot->addGraph());
-
 //        graphs[0]->setPen(QPen(Qt::green,1));
         customPlot->xAxis->setLabel("r");
         customPlot->yAxis->setLabel("Field, eV");
+
+        customPlot->legend->setVisible(false);
+        break;
      case 4: //Q_d
         graphs.append(customPlot->addGraph());
         customPlot->xAxis->setLabel("time");
         customPlot->yAxis->setLabel("Dust grain charge, in e");
+        customPlot->legend->setVisible(false);
+        break;
      case 5: //dE_d
        graphs.append(customPlot->addGraph());
        customPlot->xAxis->setLabel("Time");
        customPlot->yAxis->setLabel("Ion energy flux");
-
+       customPlot->legend->setVisible(false);
+       break;
     }
 
         // set some pens, brushes and backgrounds:
@@ -72,12 +97,8 @@ void ChartWidget::prepareChart(){
         customPlot->yAxis->setBasePen(QPen(Qt::black, 1));
         customPlot->xAxis->setTickPen(QPen(Qt::black, 1));
         customPlot->yAxis->setTickPen(QPen(Qt::black, 1));
-        customPlot->xAxis->setSubTickPen(QPen(Qt::blue, 1));
-        customPlot->yAxis->setSubTickPen(QPen(Qt::blue, 1));
         customPlot->xAxis->setTickLabelColor(Qt::black);
         customPlot->yAxis->setTickLabelColor(Qt::black);
-        customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
-        customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
 
         customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
         customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
@@ -105,6 +126,7 @@ void ChartWidget::refresh(){
         break;
     case 5:
         graphs[0]->setData(plasma->getTime(),plasma->getEnergyFluxes());
+//        graphs[1]->setData(plasma->getTime(),plasma->getEnergyFluxes());
         break;
 
     }

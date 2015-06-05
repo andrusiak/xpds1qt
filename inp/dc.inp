@@ -1,7 +1,7 @@
 RF DISCHARGE (IN MKS UNITS)--( A1/A0 = 5.)---argon plasma----    
 
 -nsp---nc---nc2p-----dt[s]-----r0[m]---r1[m]-----epsilonr--
-  2   200   200000     1e-11      50e-6    500e-6        2.
+  2   200   1000     1e-11      50e-6    500e-6        2.
 
 -rhoback[C/m^3]---backj[Amp/m^2]---dde--extR[Ohm]--extL[H]---extC[F]--q0[C]-
      0.0               0.0         0.0    0.0       0.0      3.2e-1   0.0 
@@ -10,10 +10,10 @@ RF DISCHARGE (IN MKS UNITS)--( A1/A0 = 5.)---argon plasma----
    0         v        0.0        0.0           0.0       0       0.0     
 
 ---secondary----e_collisional---i_collisional----reflux---nfft--
-      0             0            	   1          	 1	     512
+      0             1            	   1          	 1	     512
 
 ---seec(electrons)---seec(ions)---ion species---Gpressure[Torr]---GTemp[eV]---
-         0.0            0.2	      2	              3e-2         .026 	
+         0.0            0.2	      2	              3e-1        .026 	
 
 ELECTRON-NEUTRAL COLLISIONAL PARAMETERS-----
 

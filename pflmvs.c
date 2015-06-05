@@ -169,8 +169,8 @@ move ()
 	
     //pole
     if(MDFIELDS){
-        printf("Velocity:%f %f\n",vr[isp][i],qm[isp]*dttx*e[i+isp*nsp]);
-        vr[isp][i] += qm[isp]*dttx*e[i+isp*nsp];
+        int index = i+isp*np[isp];
+        vr[isp][i] += qm[isp]*dttx*e[index];
     }else{
         vr[isp][i] += a1[j] + s*(a1[j+1] - a1[j])+vptemp*vptemp/r[isp][i];
     }

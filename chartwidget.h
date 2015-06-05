@@ -7,6 +7,7 @@
 #include "plasmamodel.h"
 #include "qcustomplot.h"
 
+#define SKIP_STEPS 25
 namespace Ui {
 class ChartWidget;
 }

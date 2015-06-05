@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&dataTimer, SIGNAL(timeout()), ui->chartFrame, SLOT(refresh()));
     connect(&dataTimer, SIGNAL(timeout()), ui->chartFrame_2, SLOT(refresh()));
 
-    dataTimer.start(50); // Interval 0 means to refresh as fast as possible
+    dataTimer.start(1000); // Interval 0 means to refresh as fast as possible
 
 //    if(AUTOSTART) on_startButton_clicked();
 }

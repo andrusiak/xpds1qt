@@ -24,6 +24,8 @@
 
 #define MDFIELDS        1  /* 1 - enable the molecular dynamics mode of the field calculation */
 
+#define SKIP_STEPS      25  /* 1 - enable the molecular dynamics mode of the field calculation */
+
 #ifndef max
 #define max(x, y)       (((x) > (y)) ? (x) : (y))
 #endif
@@ -68,7 +70,8 @@ GLOBAL int nsp, nc, ng, ntri, secondary, ecolsp, icolsp, secsp, ionsp,
            ecollisional, icollisional, hist_hi, thist_hi, freq_hi, interval,
            np[NSMAX], Index[1024], nfft, src, dcramped, nbin[NSMAX], reflux,
            inject[NSMAX], maxnp[NSMAX],
-           energy[NSMAX];
+           energy[NSMAX],
+           step;
 
 GLOBAL char freqbuf[30];
 
@@ -82,7 +85,9 @@ GLOBAL float **r, **vr, **vth, **vph, **srho, *rho, *e, *phi, *r_array,
              *iontemp, *chrgxrate, *rg, *rg3, *avene, *avenemp, **fe, **ftheta,
              **e_array, **th_array, *Power_hist,
              **qdust_hist,
-             *r1d,*q1, *tmp, **tmp2d;// for mdfields
+             *r1d,*q1, *tmp, **tmp2d,
+             *e_md, *phi_md, **np_md, **srho_md ;//charts for mdfields
+
 
 GLOBAL void  circuit1(), circuit2(), circuit3(), circuit4(), (*circuitptr)();
 GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
@@ -90,7 +95,7 @@ GLOBAL float frand(), bc1(), bc2(), bc3(), bc4(), (*bcptr)();
 GLOBAL int pds_main(int, char **);
 
 GLOBAL int start_(int, char **);
-GLOBAL void history(), move(), adjust(), mcc(), fields(), mdfields();
+GLOBAL void history(), move(), adjust(), mcc(), fields(), mdfields(), mdfields2();
 
 GLOBAL void swap_idx(float*, long*, float*, long), swap2d_idx(float**, long*, float*, long);
 
